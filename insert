@@ -1,0 +1,47 @@
+bool inserted = false;
+Node* current = head;
+
+if (head == NULL && r == 1)
+{
+head = new Node(e,0); //int data, int balance
+inserted  = true;
+return;
+}
+else if (head == NULL)
+{
+std::cout << "ERROR - Rank: " << r << " is out of bounds." << std::endl;
+}
+
+// Insert like a normal binary tree
+while (!inserted && current != NULL)
+{
+if (e > current->data) // go to the right
+{
+if (current->right == NULL)
+{
+current->right = new Node(e,1, current); // height will be one
+incrementHeight(current);
+}
+else
+{
+current = current->right;
+}
+}
+else if (e < current->data) // go to the left
+{
+if (current->left == NULL) // make new leaf
+{
+current->left = new Node(e, 1, current); // element, rank, parent
+incrementHeight(current);
+
+}
+else //continue loop
+{
+current = current->left;
+}
+}
+else // e == current -> data
+{
+return;
+}
+}
